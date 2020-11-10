@@ -3,6 +3,7 @@ package com.androidstudio.kotlin.citysunrise
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     protected fun getSunset(view:View){
-        var city = ""
+        var city = cityName.text.toString()
         val url = "https://weather-ydn-yql.media.yahoo.com/forecastrss?location="+ city +",ca&format=json" ;
     }
 }
