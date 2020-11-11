@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.BufferedReader
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -37,8 +39,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        private fun convertStreamToString(inputStream: InputStream?): Any {
+        private fun convertStreamToString(inputStream: InputStream?): String{
+            val bufferReader = BufferedReader(InputStreamReader(inputStream))
+            var line:String
+            var allString:String = ""
 
+            try {
+                do {
+                    line = bufferReader.readLine()
+                    if(line != null){
+                        allString += line
+                    }
+
+                }while (line !=null)
+            }catch (err:java.lang.Exception){}
+            finally {
+                inputStream!!.close()
+            }
         }
 
         override fun onPreExecute() {
