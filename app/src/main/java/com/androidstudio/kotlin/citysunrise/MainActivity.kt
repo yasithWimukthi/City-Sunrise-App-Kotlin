@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -33,10 +34,13 @@ class MainActivity : AppCompatActivity() {
                 urlConnect.connectTimeout = 30000
 
                 var inString = convertStreamToString(urlConnect.inputStream)
+
+                publishProgress(inString)
             }
             catch (err:Exception){
                 //err.stackTrace
             }
+            return null!!
         }
 
         private fun convertStreamToString(inputStream: InputStream?): String{
@@ -56,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             finally {
                 inputStream!!.close()
             }
+            return null!!
         }
 
         override fun onPreExecute() {
@@ -67,7 +72,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onProgressUpdate(vararg values: String?) {
-            super.onProgressUpdate(*values)
+            try {
+                var json = JSONObject(values[0])
+                val query = json.getJSONObject("query")
+                val results = query.getJSONObject("results")
+                val channel = results.getJSONObject("channel")
+                val atmosphere = channel.getJSONObject("atmosphere")
+            }
+            catch (err:java.lang.Exception){}
         }
 
         override fun onCancelled(result: String?) {
