@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +24,21 @@ class MainActivity : AppCompatActivity() {
 
     inner class getData: AsyncTask<String, String, String>() {
         override fun doInBackground(vararg params: String?): String {
-            TODO("Not yet implemented")
+
+            try{
+                val url = URL(params[0])
+                val urlConnect = url.openConnection() as HttpURLConnection
+                urlConnect.connectTimeout = 30000
+
+                var inString = convertStreamToString(urlConnect.inputStream)
+            }
+            catch (err:Exception){
+                //err.stackTrace
+            }
+        }
+
+        private fun convertStreamToString(inputStream: InputStream?): Any {
+
         }
 
         override fun onPreExecute() {
