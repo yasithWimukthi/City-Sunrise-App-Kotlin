@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             catch (err:Exception){
                 //err.stackTrace
             }
-            return null!!
+            return ""
         }
 
         private fun convertStreamToString(inputStream: InputStream?): String{
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             finally {
                 inputStream!!.close()
             }
-            return null!!
+            return ""
         }
 
         override fun onPreExecute() {
@@ -77,7 +77,9 @@ class MainActivity : AppCompatActivity() {
                 val query = json.getJSONObject("query")
                 val results = query.getJSONObject("results")
                 val channel = results.getJSONObject("channel")
-                val atmosphere = channel.getJSONObject("atmosphere")
+                val astronomy = channel.getJSONObject("astronomy")
+                val sunrise = astronomy.getString("sunrise")
+                tvSunSetTime.text = ("Sunrise time is : $sunrise")
             }
             catch (err:java.lang.Exception){}
         }
